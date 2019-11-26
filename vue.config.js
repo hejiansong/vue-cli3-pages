@@ -1,5 +1,9 @@
 let path = require('path')
 let glob = require('glob')
+
+function resolve (dir) {
+  return path.join(__dirname, dir)
+}
 //配置pages多页面获取当前文件夹下的html和js
 function getEntry (globPath) {
   let entries = {}, basename, tmp;
@@ -16,28 +20,28 @@ function getEntry (globPath) {
   return entries;
 }
 
-let pages = getEntry('./src/modules/**?/*.html');
+let pages = getEntry('./src/modules/**/*.html');
 console.log(pages, process.env.NODE_ENV === 'production', path.join(__dirname, './dist'))
 //配置end
 
 module.exports = {
   lintOnSave: process.env.NODE_ENV !== 'production', // 禁用eslint,
-  publicPath: process.env.NODE_ENV === 'production' ? 'https://www.mycdn.com/' : './',
+  publicPath: '/',
 	productionSourceMap: false,
 	pages,
   devServer: {
-    index: 'page1.html', //默认启动serve 打开page1页面
+    index: 'index.html', //默认启动serve 打开page1页面
 		open: process.platform === 'darwin',
 		host: '',
 		port: 8088,
 		https: false,
     hotOnly: false,
     proxy: {
-      '/xrf/': {
+      '/api': {
         target: 'http://reg.tool.hexun.com/',
         changeOrigin: true,
         pathRewrite: {
-          '^/xrf': ''
+          '^/api': ''
         }
       }
     },
@@ -45,17 +49,23 @@ module.exports = {
   },
   chainWebpack: config => {
     config.module
-    .rule('images')
-    .use('url-loader')
-    .loader('url-loader')
-    .tap(options => {
-      // 修改它的选项...
-      options.limit = 100
-      return options
-    })
+      .rule('images')
+      .use('url-loader')
+      .loader('url-loader')
+      .tap(options => {
+        // 修改它的选项...
+        options.limit = 100
+        return options
+      })
+
+    config.resolve.alias
+      .set('@', resolve('src')) // 配置模块路径公共变量
+      .set('@test', resolve('src/modules/test'))
+
     Object.keys(pages).forEach(entryName => {
 			config.plugins.delete(`prefetch-${entryName}`);
-		});
+    });
+    
 		if(process.env.NODE_ENV === 'production') {
 			config.plugin('extract-css').tap(() => [{
 				path: path.join(__dirname, './dist'),
@@ -64,11 +74,11 @@ module.exports = {
 		}
   },
   configureWebpack: config => {
-		if(process.env.NODE_ENV === 'production') {
-			config.output = {
-				path: path.join(__dirname, './dist'),
-				filename: 'js/[name].[contenthash:8].js'	
-			};
-		}
+		// if(process.env.NODE_ENV === 'production') {
+		// 	config.output = {
+    //     path: path.join(__dirname, './dist'),
+		// 		filename: 'js/[name].[contenthash:8].js'	
+		// 	};
+		// }
 	}
 }
