@@ -35,20 +35,22 @@ cssList.forEach((filepath, name) => {
   let fileNameList = filepath.split('.')
   let fileName = fileNameList[1].split('/')[3]// 多页面页面目录
   let copyName = filepath.split('/')[3]
-  let curModuleName = moduleNames.filter(item => fileName.includes(item) && item)[0]
-  let changeDirectory = `./dist/${curModuleName}/css`// 多页面JS文件地存放址
+  let curModuleNames = moduleNames.filter(item => fileName.includes(item) && item)
+  let changeDirectorys = curModuleNames.length && curModuleNames.map(moduleName => `./dist/${moduleName}/css`) // 多页面JS文件地存放址
   if (!fileName.includes('chunk-vendors')) {
-    /* eslint-disable-next-line */
-    fs.exists(changeDirectory, function (exists) {
-      if (exists) {
-        // console.log(`${fileName}下CSS文件已经存在`)
-        callbackFile(filepath, `${changeDirectory}/${copyName}`)
-      } else {
-        fs.mkdir(changeDirectory, function () {
-          callbackFile(filepath, `${changeDirectory}/${copyName}`)
-          //   console.log(`${fileName}下CSS文件创建成功`)
-        })
-      }
+    changeDirectorys.forEach(path => {
+      /* eslint-disable-next-line */
+      fs.exists(path, function (exists) {
+        if (exists) {
+          // console.log(`${fileName}下CSS文件已经存在`)
+          callbackFile(filepath, `${path}/${copyName}`)
+        } else {
+          fs.mkdir(path, function () {
+            callbackFile(filepath, `${path}/${copyName}`)
+            //   console.log(`${fileName}下CSS文件创建成功`)
+          })
+        }
+      })
     })
   }
 })

@@ -26,21 +26,23 @@ var callbackFile = function (src, dst) {
 glob.sync('./dist/js/*.js').forEach((filepath, name) => {
   let fileNameList = filepath.split('.')
   let fileName = fileNameList[1].split('/')[3]// 多页面页面目录
-  let moduleName = glob.sync(`./src/modules/**/*.html`).map(item => item.split('/')[3]).filter(item => fileName.includes(item) && item)[0]
+  let moduleNames = glob.sync(`./src/modules/**/*.html`).map(item => item.split('/')[3]).filter(item => fileName.includes(item) && item)
   let copyName = filepath.split('/')[3]
-  let changeDirectory = `./dist/${moduleName}/js`// 多页面JS文件地存放址
+  let changeDirectorys = moduleNames.length && moduleNames.map(moduleName => `./dist/${moduleName}/js`) // 多页面JS文件地存放址
   if (!fileName.includes('chunk-vendors')) {
-    // eslint-disable-next-line
-    fs.exists(changeDirectory, function (exists) {
-      if (exists) {
-        // console.log(`${fileName}下JS文件已经存在`)
-        callbackFile(filepath, `${changeDirectory}/${copyName}`)
-      } else {
-        fs.mkdir(changeDirectory, function () {
-          callbackFile(filepath, `${changeDirectory}/${copyName}`)
-          // console.log(`${fileName}下JS文件创建成功`)
-        })
-      }
+    changeDirectorys.forEach(path => {
+      // eslint-disable-next-line
+      fs.exists(path, function (exists) {
+        if (exists) {
+          // console.log(`${fileName}下JS文件已经存在`)
+          callbackFile(filepath, `${path}/${copyName}`)
+        } else {
+          fs.mkdir(path, function () {
+            callbackFile(filepath, `${path}/${copyName}`)
+            // console.log(`${fileName}下JS文件创建成功`)
+          })
+        }
+      })
     })
   }
 })
