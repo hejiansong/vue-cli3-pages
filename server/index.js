@@ -29,7 +29,7 @@ const app = new Koa()
   // 匹配模块入口
   else if (modules.includes(module)) await send(ctx, '/index.html', { root: getModuleRoot(module) })
   // css,js静态资源路径
-  else {
+  else if (ctx.accept.headers.referer) {
     let resource = ctx.accept.headers.referer.split('/').filter(r => modules.includes(r))[0] || 'index';
     await send(ctx, ctx.path, { root: getModuleRoot(resource)})
   }

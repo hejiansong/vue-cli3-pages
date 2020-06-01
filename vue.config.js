@@ -17,7 +17,7 @@ function getEntry (globPath) {
     moduleName = tmp[1];
     moduleIndexHtml = tmp[2];
     entries[moduleName] = {
-      entry: `src/${modules}/${moduleName}/main.js`,
+      entry: `src/${modules}/${moduleName}/main.ts`,
       template: `src/${modules}/${moduleName}/${moduleIndexHtml}`,
       title:  moduleIndexHtml,
       filename: process.env.NODE_ENV !== 'production'
@@ -45,7 +45,7 @@ module.exports = {
   devServer: {
     index: 'module1', //默认启动serve 打开page1页面
 		open: false,
-		host: 'localhost',
+		// host: 'localhost',
 		port: 8088,
 		https: false,
     hotOnly: false,

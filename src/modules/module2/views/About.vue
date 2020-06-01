@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <div>模块1</div>
+    <div>模块2</div>
     <h1>This is an about page</h1>
     <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
   </div>

@@ -14,6 +14,7 @@
     "no-consecutive-blank-lines": false,
     "object-literal-sort-keys": false,
     "ordered-imports": false,
-    "quotemark": [true, "single"]
+    "quotemark": [true, "single"],
+    "await-promise": true // 不允许没有Promise的情况下使用await
   }
 }
