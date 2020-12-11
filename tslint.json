@@ -15,6 +15,15 @@
     "object-literal-sort-keys": false,
     "ordered-imports": false,
     "quotemark": [true, "single"],
-    "await-promise": true // 不允许没有Promise的情况下使用await
+    "await-promise": true, // 不允许没有Promise的情况下使用await
+    "trailing-comma": [true, { // 末尾逗号不检测
+        "singleline": "never",
+        "multiline": {
+        "objects": "never",
+        "arrays": "never",
+        "functions": "never",
+        "typeLiterals": "never"
+      }
+    }] 
   }
 }

@@ -10,17 +10,17 @@ export default new Router({
     {
       path: '/module1/',
       name: '/',
-      component: () => import(/* webpackChunkName: "module1-home" */ '@module1/views/Home.vue'),
+      component: () => import(/* webpackChunkName: "module1-home" */ '@module1/views/Home.vue')
     },
     {
       path: '/module1/home',
       name: 'home',
-      component: () => import(/* webpackChunkName: "module1-home" */ '@module1/views/Home.vue'),
+      component: () => import(/* webpackChunkName: "module1-home" */ '@module1/views/Home.vue')
     },
     {
       path: '/module1/about',
       name: 'about',
-      component: () => import(/* webpackChunkName: "module1-about" */ '@module1/views/About.vue'),
-    },
-  ],
+      component: () => import(/* webpackChunkName: "module1-about" */ '@module1/views/About.vue')
+    }
+  ]
 });

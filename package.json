@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "license": "ISC",
   "scripts": {
-    "dev": "vue-cli-service serve",
-    "build": "vue-cli-service build && node build/cssCopy.js && node build/jsCopy.js && node build/htmlReplace.js",
-    "start": "vue-cli-service build && node build/cssCopy.js && node build/jsCopy.js && node build/htmlReplace.js && node server/index.js",
+    "dev": "cross-env MODULE_ENV=module2 vue-cli-service serve",
+    "build": "cross-env MODULE_ENV=module2 vue-cli-service build && node build/cssCopy.js && node build/jsCopy.js && node build/htmlReplace.js",
+    "start": "cross-env MODULE_ENV=module2 vue-cli-service build && node build/cssCopy.js && node build/jsCopy.js && node build/htmlReplace.js && node server/index.js",
     "serve": "node server/index.js",
     "lint": "vue-cli-service lint"
   },
@@ -24,6 +24,7 @@
     "@vue/cli-plugin-typescript": "^3.11.0",
     "@vue/cli-service": "^3.11.0",
     "autodll-webpack-plugin": "^0.4.2",
+    "cross-env": "^7.0.2",
     "hard-source-webpack-plugin": "^0.13.1",
     "koa": "^2.11.0",
     "koa-send": "^5.0.0",

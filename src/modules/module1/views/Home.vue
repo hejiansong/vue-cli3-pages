@@ -13,8 +13,8 @@ import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 @Component({
   name: 'Home',
   components: {
-    HelloWorld,
-  },
+    HelloWorld
+  }
 })
 export default class Home extends Vue {
   private moduleName: string = '模块1';

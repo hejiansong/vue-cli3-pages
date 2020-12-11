@@ -1,14 +1,15 @@
-let moduleName = process.argv[3]
+let modules = process.env.MODULE_ENV ? process.env.MODULE_ENV.split(',') : null
 let path = require('path')
 let glob = require('glob')
 const chalk = require('chalk');
 const AutoDllPlugin = require('autodll-webpack-plugin');
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin')
-
 function resolve (dir) {
   return path.join(__dirname, dir)
 }
-//配置pages多页面获取当前文件夹下的html和js
+/**
+ * @param {String} globPath 配置pages多页面获取当前文件夹下的html和js
+ */
 function getEntry (globPath) {
   let entries = {}, tmp, modules, moduleName, moduleIndexHtml;
   glob.sync(globPath).forEach(entry => {
@@ -27,15 +28,23 @@ function getEntry (globPath) {
   });
   return entries;
 }
-let pages = getEntry(`./src/modules/${moduleName || '**'}/*.html`);
+let moduleName = modules ? `?(${modules.join('|')})` : '**'
+let pages = getEntry(`./src/modules/${moduleName}/*.html`);
 let moduleKeys = Object.keys(pages).map(key => key)
-// console.log(chalk.yellow(`${process.argv}`))
-if (process.argv[3] && !moduleKeys.includes(process.argv[3])) {
-  console.log(chalk.yellow(`[${process.argv[3]}]模块没有找到，无法进行构建`))
-  return
+if (modules) { // 判断指定构建模块是否存在,不存在则不构建
+  let valid = true
+  let mod = ''
+  modules.forEach(m => {
+    if (!moduleKeys.includes(m)) {
+      valid = false
+      mod = m
+      console.log(chalk.yellow(`--------[${m}]模块不存在，无法进行构建--------`))
+    }
+  })
+  throw new Error(`Build error, module undefined`)
+  if (!valid) return
 }
 //配置end
-
 module.exports = {
   lintOnSave: process.env.NODE_ENV !== 'production', // 禁用eslint,
   publicPath: process.env.NODE_ENV !== 'production' ? '/' : './',
