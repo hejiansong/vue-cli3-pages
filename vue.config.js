@@ -7,6 +7,7 @@ const HardSourceWebpackPlugin = require('hard-source-webpack-plugin')
 function resolve (dir) {
   return path.join(__dirname, dir)
 }
+
 /**
  * @param {String} globPath 配置pages多页面获取当前文件夹下的html和js
  */
@@ -28,9 +29,21 @@ function getEntry (globPath) {
   });
   return entries;
 }
-let moduleName = modules ? `?(${modules.join('|')})` : '**'
-let pages = getEntry(`./src/modules/${moduleName}/*.html`);
+
+/**
+ * 获取现有模块的地址
+ */
+function getModules (globPath) {
+  let moduleName = modules ? `?(${modules.join('|')})` : '**'
+  return getEntry(globPath
+    ? globPath
+    : `./src/modules/${moduleName}/*.html`
+  );
+}
+
+let pages = getModules();
 let moduleKeys = Object.keys(pages).map(key => key)
+let allModules = Object.keys(getModules(`./src/modules/**/*.html`)).map(key => key)
 if (modules) { // 判断指定构建模块是否存在,不存在则不构建
   let valid = true
   let mod = ''
@@ -39,10 +52,10 @@ if (modules) { // 判断指定构建模块是否存在,不存在则不构建
       valid = false
       mod = m
       console.log(chalk.yellow(`--------[${m}]模块不存在，无法进行构建--------`))
+      console.log(chalk.yellow(`--------请选择已存在模块${allModules.join(',')}进行构建--------`))
     }
   })
-  throw new Error(`Build error, module undefined`)
-  if (!valid) return
+  if (!valid) throw new Error(`Build error, module undefined`)
 }
 //配置end
 module.exports = {

@@ -50,9 +50,13 @@ glob.sync('./dist/js/*.js').forEach((filepath, name) => {
       fs.readFile(`./dist/${name}/index.html`, 'utf8', function (error, data) {
         let regJs = new RegExp('js/' + fileName + '', 'g')
         let regDll = new RegExp('dll/dll', 'g')
-        let htmlContent = data.toString().replace(regJs, `../js/${fileName}`).replace(regDll, `../dll/dll`)
-        fs.writeFile(`./dist/${name}/index.html`, htmlContent, 'utf8', function (error) {
-        })
+        let regPreload = new RegExp('<link[^>].?href=.*?>(.|\n)*as=script>', 'g') // 匹配预加载资源链接
+        // console.log(data.toString().match(regPreload))
+        let htmlContent = data.toString()
+        .replace(regPreload, '') // 暂时不知为什么会出现重复加载资源,正则匹配多余预加载资源,并删除
+        .replace(regJs, `../js/${fileName}`) // 因为抽离了公共库资源目录,需要修改打包文件生成目录,要修改html文件的资源目录
+        .replace(regDll, `../dll/dll`) // 因为抽离了公共库资源目录,需要修改打包文件生成目录,要修改html文件的资源目录
+        fs.writeFile(`./dist/${name}/index.html`, htmlContent, 'utf8', function (error) {})
       })
     })
   }

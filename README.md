@@ -1,5 +1,5 @@
 # Vue-cli3 多页分模块打包
-* ## 命令
+## 命令
 ### 下载依赖
 ```
 yarn install
@@ -15,24 +15,19 @@ yarn dev
 yarn build
 ```
 
-### 运行生产环境集成KOA本地服务
-```
-yarn start
-```
-
 ### 单独运行KOA本地服务
 ```
 yarn serve
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### 运行生产环境集成KOA本地服务自动运行
+```
+yarn start
+```
 
-
- * ## 多模块配置打包
- 
+## 多模块配置打包，(MODULE_ENV=空值为全部模块打包，单个或多个模块名称之间，逗号分隔)
  ```
 "scripts": {
-    "build": "vue-cli-service build module1 && node build/cssCopy.js && node build/jsCopy.js && node build/htmlReplace.js"
+    "build": "cross-env MODULE_ENV=module1 vue-cli-service build && node build/cssCopy.js && node build/jsCopy.js && node build/htmlReplace.js"
   },
  ```
