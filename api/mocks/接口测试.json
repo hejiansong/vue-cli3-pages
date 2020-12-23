@@ -1,0 +1,24 @@
+/**
+ * 测试数据
+ *
+ * @url /viewFlowAdjustRecord
+ *
+ * 详细的说明
+ * uid: userID
+ * name: username
+ * email: 邮件
+ */
+
+{
+  "code": "200",
+  "msg": "",
+  "result|3": [
+    {
+      "originalGrade|+1": ["S", "A", "B", "C", "D"],
+      "adjustGrade|+1": ["S", "A", "B", "C", "D"],
+      "operator|+1": ["hejiansong", "hejiansong"],
+      "adjustReason|+1": ["@cparagraph(4)", "@cparagraph(4)", null],
+      "operateDate": "@datetime(true)"
+    }
+  ]
+}

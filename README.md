@@ -31,3 +31,21 @@ yarn start
     "build": "cross-env MODULE_ENV=module1 vue-cli-service build && node build/cssCopy.js && node build/jsCopy.js && node build/htmlReplace.js"
   },
  ```
+ # 常用命令
+
+  + git
+    - 更新远程分支
+ ```
+git remote update origin --prune
+```
+
+  + npm
+    - 查看依赖包全部版本
+ ```
+npm view yarn versions
+ ```
+
+  + 刷新DNS
+ ```
+ipconfig /flushdns
+ ```

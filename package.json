@@ -7,13 +7,19 @@
     "build": "cross-env MODULE_ENV=module1 vue-cli-service build && node build/cssCopy.js && node build/jsCopy.js && node build/htmlReplace.js",
     "start": "cross-env MODULE_ENV=module1 vue-cli-service build && node build/cssCopy.js && node build/jsCopy.js && node build/htmlReplace.js && node server/index.js",
     "serve": "node server/index.js",
+    "api": "nodemon -e json,js -w api \"api/app.js\"",
+    "doc": "vuepress dev docs --temp .temp",
+    "docs:build": "vuepress build docs",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "@kazupon/vue-i18n-loader": "^0.4.1",
     "core-js": "^2.6.5",
-    "vue": "^2.6.10",
+    "element-ui": "^2.14.1",
+    "express-mockjs": "^0.4.9",
+    "vue": "2.6.12",
     "vue-class-component": "^7.0.2",
+    "vue-highlight.js": "^3.1.0",
     "vue-i18n": "^8.15.3",
     "vue-property-decorator": "^8.1.0",
     "vue-router": "^3.0.3",
@@ -30,10 +36,11 @@
     "koa-send": "^5.0.0",
     "koa-static": "^5.0.0",
     "koa2-connect": "^1.0.2",
-    "nodemon": "^2.0.2",
+    "nodemon": "^2.0.6",
     "sass": "^1.18.0",
     "sass-loader": "^7.1.0",
     "typescript": "^3.4.3",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.10",
+    "vuepress": "^1.7.1"
   }
 }
