@@ -7,6 +7,7 @@ const koaConnect = require('koa2-connect')
 const chalk = require('chalk');
 const glob = require('glob')
 const { port, proxyTable } = require('./config')
+const isDocServe = process.env.SERVE_ENV === 'doc' // 是否doc服务
 // 获取模块根路径
 function getModuleRoot(module = '') {
   return path.resolve(`dist/${module}`);
@@ -50,4 +51,4 @@ Object.keys(proxyTable).map(context => {
   // 使用代理
   app.use(proxy(context, options))
 })
-app.listen(port, () => console.log(chalk.yellow(`Access to the address: http://localhost:${port}}`)))
+app.listen(port, () => console.log(chalk.yellow(`Access to the address: http://localhost:${port}`)))

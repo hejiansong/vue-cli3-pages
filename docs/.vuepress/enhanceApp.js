@@ -2,6 +2,7 @@ import VueHighlightJS from 'vue-highlight.js'
 import Element from 'element-ui'
 import 'highlight.js/styles/atom-one-dark.css'
 import 'element-ui/lib/theme-chalk/index.css'
+import DemoBlock from './components/DemoBlock.vue'
 // import './assets/styles/index.css' //组件css文件
 export default ({
   Vue, // VuePress 正在使用的 Vue 构造函数
@@ -13,4 +14,5 @@ export default ({
   // ...做一些其他的应用级别的优化
   Vue.use(VueHighlightJS)
   Vue.use(Element)
+  Vue.component('DemoBlock', DemoBlock)
 }

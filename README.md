@@ -39,10 +39,15 @@ yarn start
 git remote update origin --prune
 ```
 
-  + npm
+  + npm/yarn
     - 查看依赖包全部版本
+    - 更新指定版本
  ```
 npm view yarn versions
+ ```
+
+ ```
+ yarn upgrade package@version
  ```
 
   + 刷新DNS
